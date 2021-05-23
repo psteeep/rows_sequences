@@ -14,8 +14,10 @@ int main() {
 
 
 
-	std::string X = "ABCBDAB", Y = "BDCABA"; // for case 3
+	//std::string X = "ABCBDAB", Y = "BDCABA"; // for case 3
+	std::string X, Y;
 
+	std::string wag_x, wag_y; // for case 4
 
 	const int SIZE = 12;    //
 	int array[SIZE] = {};	// for case 8
@@ -29,9 +31,9 @@ int main() {
 
 	int a[] = {1,2,4,6,9};
 	int b[] = {23,2,132,6,12};  // for case 7
-	int c[12];
-	int n = 4;
-	int m = 4;
+	int c[1000];
+	int n = sizeof(a) / sizeof(a[0]);
+	int m = sizeof(b) / sizeof(b[0]);
 
 
 
@@ -46,12 +48,18 @@ int main() {
 		break;
 	
 	case 3:
-		std::cout << "The length of the LCS is " <<
-			my_algo.longestCommonSubsequence(X, Y, X.length(), Y.length());
+		std::cout << "Enter two string: " << std::endl;
+		std::cin >> X;
+		std::cin >> Y;
+		std::cout << "The max length -> " <<
+			my_algo.longestCommonSubsequence(X, Y, X.length(), Y.length()) << std::endl;
 		break;
 
 	case 4:
-		std::cout << "distance = " << my_algo.Wagner();
+		std::cout << "Enter two string: " << std::endl;
+		std::cin >> wag_x;
+		std::cin >> wag_y;
+		std::cout << "distance = " << my_algo.Wagner(wag_x,wag_y) << std::endl;
 		break;
 
 	case 5:
@@ -70,9 +78,9 @@ int main() {
 		for (int i = 0; i < SIZE; i++)
 		{
 			array[i] = i + 1;
-			std::cout << array[i] << " | ";
+			std::cout << array[i] << " ";
 		}
-		std::cout << "Enter any number: ";
+		std::cout << "Enter number to find: ";
 		std::cin >> key;
 
 		index = my_algo.binarySearch(array, 0, SIZE, key);
