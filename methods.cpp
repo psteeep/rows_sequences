@@ -25,8 +25,11 @@ void RowsAlgo::stringMatch() {
 	char ch[] = "fdfdsfdfg";
 	char ch1[] = "ds"; 
 	char* pos = strstr(ch, ch1);
-	if (pos != NULL)
-		std::cout <<"First match started at index -> " << (int)(pos - ch) << std::endl;
+	if (pos != NULL) {
+		std::cout << "1 string: " << ch << std::endl;
+		std::cout << "2 string: " << ch1 << std::endl;
+		std::cout << "First match started at index -> " << (int)(pos - ch) << std::endl;
+	}
 	else
 		std::cout << "not found\n";
 }
@@ -50,8 +53,6 @@ int RowsAlgo::longestCommonSubsequence(std::string X, std::string Y, int m, int 
 int RowsAlgo::Wagner(std::string str1, std::string str2) {
 	int d[100][100];
 	int i, j, str1_len, str2_len, temp, tracker;
-	//std::string str1 = "Support";
-	//std::string str2 = "Suppose";
 	str1_len = str1.length();
 	str2_len = str2.length();
 	for (i = 0; i <= str1_len; i++)
@@ -85,12 +86,12 @@ void RowsAlgo::naive(char* pat, char* txt) {
 				break;
 
 		if (j == M)  
-			std::cout << "Pattern found at index "
+			std::cout << "match found at index -> "
 			<< i << std::endl;
 	}
 }
 
-void RowsAlgo::commonArrEll(int a[], int b[], int c[], int n, int m) {
+void RowsAlgo::commonArrEl(int a[], int b[], int c[], int n, int m) {
 		int k = 0;
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {
@@ -101,10 +102,60 @@ void RowsAlgo::commonArrEll(int a[], int b[], int c[], int n, int m) {
 			}
 		}
 
+		std::cout << "array of common -> ";
 		for (int i = 0; i < k; i++)
-			std::cout << c[i] << " ";
+			std::cout << c[i] << " | ";
 }
 
-//int RowsAlgo::interpolation() {};
+int RowsAlgo::interpolation(int* arr, int size, int key) {
+	
 
-//int RowsAlgo::binarySearch_nearest() {};
+		if (size < 0 || !arr)          
+			return -1;                
+
+
+		unsigned long long low = 0;
+		unsigned long long high = size - 1;
+		unsigned long long mid;
+
+
+		while (!(arr[high] == arr[low] || key < arr[low] || arr[high] < key))
+		{
+			mid = low + (key - arr[low]) * ((high - low) / (arr[high] - arr[low]));
+
+			if (arr[mid] < key)
+				low = mid + 1;
+
+			else if (key < arr[mid])
+				high = mid - 1;
+
+			else return mid;
+		}
+
+		if (key == arr[low])
+			return low;
+
+		else return -1;
+
+};
+
+int RowsAlgo::lis(int arr[], int n) {
+	int* lis, i, j, max = 0;
+	lis = (int*)malloc(sizeof(int) * n);
+
+	for (i = 0; i < n; i++)
+		lis[i] = 1;
+
+	for (i = 1; i < n; i++)
+		for (j = 0; j < i; j++)
+			if (arr[i] > arr[j] && lis[i] < lis[j] + 1)
+				lis[i] = lis[j] + 1;
+
+	for (i = 0; i < n; i++)
+		if (max < lis[i])
+			max = lis[i];
+
+	free(lis);
+
+	return max;
+};
